@@ -1,0 +1,38 @@
+{
+    "brands": [
+      {
+        "brand": "Toyota",
+        "models": [
+          {
+            "name": "Corolla"
+          },
+          {
+            "name": "Camry"
+          }
+        ]
+      },
+      {
+        "brand": "Honda",
+        "models": [
+          {
+            "name": "Civic"
+          },
+          {
+            "name": "Accord"
+          }
+        ]
+      },
+      {
+        "brand": "Ford",
+        "models": [
+          {
+            "name": "F-150"
+          },
+          {
+            "name": "Mustang"
+          }
+        ]
+      }
+    ]
+  }
+  
