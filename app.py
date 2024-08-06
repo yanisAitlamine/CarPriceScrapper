@@ -64,7 +64,7 @@ def getLinks(brand, model):
 
 #returns a json for a website of the car versions available along with the prices associated
 def getPriceFromLink(link, brand, model):
-    smart_scraper_graph.prompt="List me all the prices of the "+brand+" "+model+", no blank space or '€' characters"
+    smart_scraper_graph.prompt="List me all the prices of the "+brand+" "+model
     smart_scraper_graph.source=link
     result = smart_scraper_graph.run()
     result["source"]=link
