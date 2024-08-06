@@ -37,80 +37,65 @@ graph_config = {
     "verbose": True,  # Enable verbose mode for debugging purposes
 }
 
-model ="civic"
-brand="honda"
+# Initialize LinkScraperGraph with source, and configuration
+link_scraper_graph = SearchLinkGraph(
+        source="",
+        config=link_graph_config
+    )
+
+# Initialize SmartScraperGraph with prompt, source, and configuration
+smart_scraper_graph = SmartScraperGraph(
+    prompt="",
+    source="",
+    config=graph_config
+)
 
 # ************************************************
 # Define usefull functions
 # ************************************************
 
-def createCarsDict(car_data):
-    car_dict={}
-    for brand_info in car_data["brands"]:
-        brand_name = brand_info["brand"]
-        model_names = [model["name"] for model in brand_info["models"]]
-        car_dict[brand_name] = model_names
-    return car_dict
-
-def getLinks(brand, model, link_scraper_graph):
-    
+#return a list of links from a google search of a car model for retail (in France retail is 'occasion')
+def getLinks(brand, model): 
     link_scraper_graph.source="https://www.google.com/search?q="+brand+"+"+model+"+occasion"
-
     result = link_scraper_graph.run()
-
     output = json.dumps(result, indent=2)  # Convert result to JSON format with indentation
-
     line_list = set(output.split("\n"))  # Split the JSON string into lines
-
     return [line for line in line_list if (model in line and "google" not in line)]
 
-def getPriceFromLink(link):
+#returns a json for a website of the car versions available along with the prices associated
+def getPriceFromLink(link, brand, model):
+    smart_scraper_graph.prompt="List me all the prices of the "+brand+" "+model+", no blank space or '€' characters"
     smart_scraper_graph.source=link
     result = smart_scraper_graph.run()
     result["source"]=link
     return result
 
 # Load JSON data from a file
-with open('TemplateInput.json', 'r') as file:
+with open('Templatefile.json', 'r') as file:
     car_data = json.load(file)
 
-# Create the dictionary
-car_dict = createCarsDict(car_data)
-print(car_dict)
+output_data=dict()
 
-# Initialize LinkScraperGraph with source, and configuration
-link_scraper_graph = SearchLinkGraph(
-        source="https://www.google.com/search?q="+brand+"+"+model+"+occasion",
-        config=link_graph_config
-    )
-
-# Initialize SmartScraperGraph with prompt, source, and configuration
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the prices of the "+brand+" "+model+" along with the version, just give me the number no blank space or '€' characters, if the price is a price range like '11000-14000' only give me the average in that case it would me 12500 don't give me the price range",
-    source="",
-    config=graph_config
-)
-
-links_list = getLinks(brand, model, link_scraper_graph)
+#for each model serach retail links on google and scrap the prices
+for brand in car_data:
+        output_data[brand]=dict()
+        for model in car_data[brand]:    
+            links_list = getLinks(brand, model)
+            print(links_list)
     
-# ************************************************
-# Get graph execution info
-# ************************************************
+            # ************************************************
+            # Get graph execution info
+            # ************************************************
 
-graph_exec_info = link_scraper_graph.get_execution_info()
-print(prettify_exec_info(graph_exec_info))
+            graph_exec_info = link_scraper_graph.get_execution_info()
+            print(prettify_exec_info(graph_exec_info))
+            output_data[brand][model]=dict()
+            for link in links_list:
+                output=getPriceFromLink(link, brand, model)
+                print(output)
+                output_data[brand][model][output["source"]]=[price.replace(' ', '').replace('€', '') for price in output['prices']]
+                graph_exec_info = smart_scraper_graph.get_execution_info()
+                print(prettify_exec_info(graph_exec_info))
 
-for link in links_list:
-    result=getPriceFromLink(link)
-    print (result)
-    
-    # Prettify the result and display the JSON
-
-
-    output = json.dumps(result, indent = 2)  # Convert result to JSON format with indentation
-
-    price_list = output.split("\n")  # Split the JSON string into lines
-
-    # Print each line of the JSON separately
-    for elements in price_list:
-        print(elements)
+with open('Templatefile.json', 'w') as json_file:
+    json.dump(output_data, json_file, indent=4)
