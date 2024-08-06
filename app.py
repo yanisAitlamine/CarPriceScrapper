@@ -1,11 +1,17 @@
 from scrapegraphai.graphs import SearchLinkGraph
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
+from pydantic import BaseModel
+from typing import List
 import json
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
+
+class Prices(BaseModel):
+    prices: list = []
+
 
 link_graph_config = {
     "llm": {
@@ -47,7 +53,8 @@ link_scraper_graph = SearchLinkGraph(
 smart_scraper_graph = SmartScraperGraph(
     prompt="",
     source="",
-    config=graph_config
+    config=graph_config,
+    schema=Prices
 )
 
 # ************************************************
@@ -64,8 +71,8 @@ def getLinks(brand, model):
 
 #returns a json for a website of the car versions available along with the prices associated
 def getPriceFromLink(link, brand, model):
-    smart_scraper_graph.prompt="List me all the prices of the "+brand+" "+model
-    smart_scraper_graph.source=link
+    smart_scraper_graph.prompt="This is a french car retail website, List me all the prices of the "+brand+" "+model
+    smart_scraper_graph.source="./leboncoin.html"
     result = smart_scraper_graph.run()
     result["source"]=link
     return result
@@ -90,8 +97,9 @@ for brand in car_data:
             graph_exec_info = link_scraper_graph.get_execution_info()
             print(prettify_exec_info(graph_exec_info))
             output_data[brand][model]=dict()
-            for link in links_list:
+            for link in links_list[:1]:
                 output=getPriceFromLink(link, brand, model)
+                print("output:\n")
                 print(output)
                 output_data[brand][model][output["source"]]=[price.replace(' ', '').replace('€', '') for price in output['prices']]
                 graph_exec_info = smart_scraper_graph.get_execution_info()
