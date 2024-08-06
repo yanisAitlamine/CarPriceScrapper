@@ -9,9 +9,9 @@ import json
 # Define the configuration for the graph
 # ************************************************
 
+#specify the schema of the output
 class Prices(BaseModel):
     prices: list = []
-
 
 link_graph_config = {
     "llm": {
@@ -97,6 +97,7 @@ for brand in car_data:
             graph_exec_info = link_scraper_graph.get_execution_info()
             print(prettify_exec_info(graph_exec_info))
             output_data[brand][model]=dict()
+            #link scraping works well so now I'm cheating to test only on the html in the project
             for link in links_list[:1]:
                 output=getPriceFromLink(link, brand, model)
                 print("output:\n")
