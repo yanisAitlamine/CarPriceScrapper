@@ -15,7 +15,7 @@ class Prices(BaseModel):
 
 link_graph_config = {
     "llm": {
-        "model": "ollama/llama3",
+        "model": "ollama/llama3.1",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
@@ -31,7 +31,7 @@ link_graph_config = {
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",  # Specify the model for the llm
+        "model": "ollama/llama3.1",  # Specify the model for the llm
         "temperature": 0,  # Set temperature parameter for llm
         "format": "json",  # Specify the output format as JSON for Ollama
         "base_url": "http://localhost:11434",  # Set the base URL for Ollama
@@ -54,7 +54,6 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="",
     source="",
     config=graph_config,
-    schema=Prices
 )
 
 # ************************************************
@@ -71,7 +70,7 @@ def getLinks(brand, model):
 
 #returns a json for a website of the car versions available along with the prices associated
 def getPriceFromLink(link, brand, model):
-    smart_scraper_graph.prompt="This is a french car retail website, List me all the prices of the "+brand+" "+model
+    smart_scraper_graph.prompt="This is a french car retail website, List me all the prices of the "+brand+" "+model+", the output should look like this: {'prices': ['', '', '']}"
     smart_scraper_graph.source="./leboncoin.html"
     result = smart_scraper_graph.run()
     result["source"]=link
