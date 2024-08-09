@@ -71,7 +71,7 @@ def getLinks(brand, model):
 #returns a json for a website of the car versions available along with the prices associated
 def getPriceFromLink(link, brand, model):
     smart_scraper_graph.prompt="This is a french car retail website, List me all the prices of the "+brand+" "+model+", the output should look like this: {'prices': ['', '', '']}"
-    smart_scraper_graph.source="./leboncoin.html"
+    smart_scraper_graph.source=link
     result = smart_scraper_graph.run()
     result["source"]=link
     return result
@@ -97,7 +97,7 @@ for brand in car_data:
             print(prettify_exec_info(graph_exec_info))
             output_data[brand][model]=dict()
             #link scraping works well so now I'm cheating to test only on the html in the project
-            for link in links_list[:1]:
+            for link in links_list:
                 output=getPriceFromLink(link, brand, model)
                 print("output:\n")
                 print(output)
