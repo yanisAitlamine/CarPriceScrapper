@@ -18,12 +18,12 @@ link_graph_config = {
         "model": "ollama/llama3.1",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
-        # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
+        "base_url": "http://localhost:11434"
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
-        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        "base_url": "http://localhost:11434"
     },
     "verbose": True,
     "headless": False
@@ -34,11 +34,11 @@ graph_config = {
         "model": "ollama/llama3.1",  # Specify the model for the llm
         "temperature": 0,  # Set temperature parameter for llm
         "format": "json",  # Specify the output format as JSON for Ollama
-        "base_url": "http://localhost:11434",  # Set the base URL for Ollama
+        "base_url": "http://localhost:11434"
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",  # Specify the model for embeddings
-        "base_url": "http://localhost:11434",  # Set the base URL for Ollama
+        "base_url": "http://localhost:11434"
     },
     "verbose": True,  # Enable verbose mode for debugging purposes
 }
