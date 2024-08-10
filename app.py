@@ -54,6 +54,7 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="",
     source="",
     config=graph_config,
+#    schema=Prices
 )
 
 # ************************************************
@@ -62,15 +63,17 @@ smart_scraper_graph = SmartScraperGraph(
 
 #return a list of links from a google search of a car model for retail (in France retail is 'occasion')
 def getLinks(brand, model): 
-    link_scraper_graph.source="https://www.google.com/search?q="+brand+"+"+model+"+occasion"
+    link_scraper_graph.source="https://www.google.com/search?q="+brand+"+"+model+"+retail"
     result = link_scraper_graph.run()
+        
     output = json.dumps(result, indent=2)  # Convert result to JSON format with indentation
     line_list = set(output.split("\n"))  # Split the JSON string into lines
-    return [line for line in line_list if (model in line and "google" not in line)]
+
+    return [line for line in line_list if (model.casefold() in line and "google".casefold() not in line)]
 
 #returns a json for a website of the car versions available along with the prices associated
 def getPriceFromLink(link, brand, model):
-    smart_scraper_graph.prompt="This is a french car retail website, List me all the prices of the "+brand+" "+model+", the output should look like this: {'prices': ['', '', '']}"
+    smart_scraper_graph.prompt="This is a car retail website, extract all the prices in a list"
     smart_scraper_graph.source=link
     result = smart_scraper_graph.run()
     result["source"]=link
@@ -101,7 +104,7 @@ for brand in car_data:
                 output=getPriceFromLink(link, brand, model)
                 print("output:\n")
                 print(output)
-                output_data[brand][model][output["source"]]=[price.replace(' ', '').replace('€', '') for price in output['prices']]
+                output_data[brand][model][output["source"]]=[price.replace(' ', '').replace('€', '').replace('$','') for price in output['prices']]
                 graph_exec_info = smart_scraper_graph.get_execution_info()
                 print(prettify_exec_info(graph_exec_info))
 

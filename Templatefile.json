@@ -1,15 +1,85 @@
 {
     "Toyota": {
         "Camry": {
-            "  \"https://www.leboncoin.fr/f/voitures/u_car_brand--TOYOTA/u_car_model--TOYOTA_Camry/p-2)\",": [
-                "18,000",
-                "20,500",
-                "22,800"
+            "  \"https://www.toyota.fr/occasions/categorie/camry)\",": [
+                "23,900",
+                "25,500",
+                "28,000"
             ],
-            "  \"https://www.leboncoin.fr/f/voitures/brand--Toyota/model--Camry)\",": [
-                "18,000",
+            "  \"https://www.toyota.fr/vehicules-neufs/camry/presentation.CAMRY.218.ea1b733d-e790-4a95-85c7-d35e4c31b915)\",": [
+                "24,900",
+                "26,500",
+                "28,000"
+            ],
+            "  \"https://www.toyota.fr/vehicules-neufs/camry/finitions-et-motorisations.CAMRY.218.ea1b733d-e790-4a95-85c7-d35e4c31b915)\",": [
+                "24,900",
+                "26,500",
+                "28,000"
+            ],
+            "  \"https://www.toyota.fr/vehicules-neufs/camry)\",": [
+                "24,900",
+                "26,500",
+                "28,000"
+            ],
+            "  \"https://www.edmunds.com/toyota/camry/)\",": [
+                "$24,350",
+                "$25,550",
+                "$26,750"
+            ],
+            "  \"https://www.toyota.fr/offres/toyota-camry-hybride)\",": [
+                "24,900",
+                "26,500",
+                "28,000"
+            ],
+            "  \"https://www.edmunds.com/used-toyota-camry/)\",": [
+                "$15,000",
+                "$18,500",
+                "$22,000"
+            ],
+            "  \"https://www.toyota.com/camry/)\",": [
+                "$24,350",
+                "$25,550",
+                "$26,950"
+            ],
+            "  \"https://media.toyota.fr/lancement-camry-hybride-2019/)\",": [
+                "24,900",
+                "26,500",
+                "28,000"
+            ],
+            "  \"https://www.edmunds.com/toyota/camry/2022/)\",": [
+                "$24,350",
+                "$25,550",
+                "$26,850"
+            ],
+            "  \"https://www.toyota.fr/vehicules-neufs/camry/configurateur)\",": [
+                "24,900",
+                "26,500",
+                "28,000"
+            ],
+            "  \"https://www.toyota.fr/vehicules-neufs/camry/presentation.CAMRY.218.b8ba3f00-7e49-4fe9-8814-56c1e11b951e)\",": [
+                "24,900",
+                "26,500",
+                "28,000"
+            ],
+            "  \"https://www.toyotaofparistx.com/new-vehicles/camry/)\",": [
+                "$24,350",
+                "$25,550",
+                "$26,850"
+            ],
+            "  \"https://www.edmunds.com/new-toyota-camry-for-sale/)\",": [
+                "$24,350",
+                "$25,550",
+                "$26,750"
+            ],
+            "  \"https://gocar.be/fr/voiture-occasion/toyota/camry)\",": [
+                "18,900",
                 "20,500",
-                "22,800"
+                "22,000"
+            ],
+            "  \"https://www.toyota.fr/occasions/voiture.toyota-camry-2024-berline-boite-automatique-hybride-50521784-30ba-4592-8392-a1774627766e)\",": [
+                "24,900",
+                "26,500",
+                "28,000"
             ]
         }
     }
