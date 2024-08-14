@@ -1,7 +1,7 @@
 from scrapegraphai.graphs import SearchLinkGraph
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 from typing import List
 import json
 
@@ -10,8 +10,11 @@ import json
 # ************************************************
 
 #specify the schema of the output
+class Price(BaseModel):
+    value: str = Field(description="Price of the car")
+
 class Prices(BaseModel):
-    prices: List = [str]
+     prices: List[Price]
 
 link_graph_config = {
     "llm": {
@@ -63,7 +66,7 @@ smart_scraper_graph = SmartScraperGraph(
 
 #return a list of links from a google search of a car model for retail (in France retail is 'occasion')
 def getLinks(brand, model): 
-    link_scraper_graph.source="https://www.google.com/search?q="+brand+"+"+model+"+retail"
+    link_scraper_graph.source="https://www.google.com/search?q="+brand+"+"+model+"+occasion"
     result = link_scraper_graph.run()
         
     output = json.dumps(result, indent=2)  # Convert result to JSON format with indentation
