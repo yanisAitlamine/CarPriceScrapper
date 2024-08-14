@@ -11,7 +11,7 @@ import json
 
 #specify the schema of the output
 class Prices(BaseModel):
-    prices: list = []
+    prices: List = [str]
 
 link_graph_config = {
     "llm": {
@@ -54,7 +54,7 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="",
     source="",
     config=graph_config,
-#    schema=Prices
+    schema=Prices
 )
 
 # ************************************************
@@ -73,7 +73,7 @@ def getLinks(brand, model):
 
 #returns a json for a website of the car versions available along with the prices associated
 def getPriceFromLink(link, brand, model):
-    smart_scraper_graph.prompt="This is a car retail website, extract all the prices in a list"
+    smart_scraper_graph.prompt="This is a car retail website, list all the prices of the "+brand+" "+model
     smart_scraper_graph.source=link
     result = smart_scraper_graph.run()
     result["source"]=link
